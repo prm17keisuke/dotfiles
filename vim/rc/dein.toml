@@ -1,0 +1,116 @@
+# 遅延ロードなしのプラグインを設定する
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]] # vim-airelineのテーマ
+repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]] # ステータスバーのカスタマイズ
+repo = 'vim-airline/vim-airline'
+hook_add = '''
+  " モードの表示名を定義(デフォルトだと長くて横幅を圧迫するので略称にしている)
+  let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'n'  : 'N',
+      \ 'i'  : 'I',
+      \ 'R'  : 'R',
+      \ 'c'  : 'C',
+      \ 'v'  : 'V',
+      \ 'V'  : 'V-L',
+      \ '^V'  : 'V-B',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ }
+  " パワーラインでかっこよく
+  let g:airline_powerline_fonts = 1
+  " カラーテーマ指定してかっこよく
+  let g:airline_theme = 'papercolor'
+  " タブバーをかっこよく
+  let g:airline#extensions#tabline#enabled = 1
+  " タブの切り替えキー設定
+  nmap <C-p> <plug>AirlineSelectPrevTab
+  nmap <C-n> <plug>AirlineSelectNextTab
+'''
+
+[[plugins]] # draculaのカラースキーム
+repo = 'dracula/vim'
+hook_add = '''
+  syntax enable
+  colorscheme dracula
+'''
+
+[[Plugins]] # 非同期構文チェッカー
+repo = 'w0rp/ale'
+hook_add = '''
+  let g:ale_linters = {
+  \ "python":['flake8','pycodestyle']
+  \}
+'''
+
+[[plugins]] # 非同期補完フレームワーク
+repo = 'Shougo/deoplete.nvim'
+on_event = 'InsertEnter'
+hook_post_source = '''
+  let g:deoplete#enable_at_startup = 1
+  set completeopt-=preview
+'''
+[[plugins]] # Python用プラグイン
+repo = 'zchee/deoplete-jedi'
+on_ft = 'python'
+hook_add = '''
+  let g:deoplete#sources#jedi#python_path = '/home/centos/venv/nvim3/bin/python'
+'''
+# html用のプラグイン
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+on_ft = 'html'
+
+[[plugins]] # ツリー表示プラグイン
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+  " コントロール+eでツリー表示
+  nnoremap <silent><C-e> :NERDTreeToggle<CR> 
+  " デフォルトで隠しファイル表示
+  let NERDTreeShowHidden = 1
+'''
+
+[[plugins]] # Robot Framework シンタックスハイライト
+repo = 'mfukar/robotframework-vim'
+
+[[plugins]] # 自動でカッコを閉じる
+repo = 'Townk/vim-autoclose'
+
+[[plugins]] # Gitクライアントプラグイン
+repo = 'tpope/vim-fugitive'
+
+[[plugins]] # gitのHEADからのコード追加、削除、変更を左端の隙間(gitter)に表示してくれる
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]] # ビジュアルモードで選択した行をまとめてコメントアウトする[gcc]
+repo = 'tpope/vim-commentary'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+hook_add = '''
+  " Denite用プレフィックス
+  nmap [denite] <Nop>
+  map <C-j> [denite]
+  " プロジェクト内のファイル検索
+  nmap <silent> [denite]<C-P> :<C-u>Denite file_rec -highlight-mode-insert=Search<CR>
+  " バッファに展開中のファイル検索
+  nmap <silent> [denite]<C-B> :<C-u>Denite buffer -highlight-mode-insert=Search<CR>
+  " ファイル内の関数/クラス等の検索
+  nmap <silent> [denite]<C-O> :<C-u>Denite outline -highlight-mode-insert=Search<CR>
+  " dotfiles配下をカレントにしてfile_rec起動
+  nmap <silent> [denite]<C-V> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/.dotfiles']}]) -highlight-mode-insert=Search=Search<CR>
+'''
+hook_post_source = '''
+  " 上下移動を<C-N>, <C-P>
+  call denite#custom#map('normal', '<C-N>', '<denite:move_to_next_line>')
+  call denite#custom#map('normal', '<C-P>', '<denite:move_to_previous_line>')
+  call denite#custom#map('insert', '<C-N>', '<denite:move_to_next_line>')
+  call denite#custom#map('insert', '<C-P>', '<denite:move_to_previous_line>')
+  " 入力履歴移動を<C-J>, <C-K>
+  call denite#custom#map('insert', '<C-J>', '<denite:assign_next_text>')
+  call denite#custom#map('insert', '<C-K>', '<denite:assign_previous_text>')
+'''

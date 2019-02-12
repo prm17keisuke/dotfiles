@@ -1,0 +1,32 @@
+if has('nvim')
+  let g:vim_home = expand('~/.nvim')
+  let g:rc_dir = expand('~/.nvim/rc')
+else
+  let g:vim_home = expand('~/.vim')
+  let g:rc_dir = expand('~/.vim/rc')
+endif
+
+" rcファイル読み込み関数
+function! s:source_rc(rc_file_name)
+  let rc_file = expand(g:rc_dir . '/' . a:rc_file_name)
+  if filereadable(rc_file)
+    execute 'source' rc_file
+  endif
+endfunction
+
+"------------------------------------------------------------------------------
+
+" 基本設定
+call s:source_rc('init.rc.vim')
+
+" neovim限定
+if has('nvim')
+  call s:source_rc('nvim.rc.vim')
+endif
+
+" deinの設定
+call s:source_rc('dein.rc.vim')
+
+" Django
+" html 拡張子がついてたら Django の templateとして読み込んでね、という設定
+autocmd FileType html setl filetype=htmldjango
