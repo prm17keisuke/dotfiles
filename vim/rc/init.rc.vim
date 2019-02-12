@@ -2,8 +2,8 @@
 " パス設定
 "------------------------------------------------------------------------------
 " Pythonのパスを指定する"
-let g:python_host_prog = expand('/home/centos/venv/nvim2/bin/python')
-let g:python3_host_prog = expand('/home/centos/venv/nvim3/bin/python')
+let g:python_host_prog = expand('/home/centos/dotfiles/venv/nvim2/bin/python')
+let g:python3_host_prog = expand('/home/centos/dotfiles/venv/nvim3/bin/python')
 
 "------------------------------------------------------------------------------
 " 基本設定
